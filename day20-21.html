@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>day20-day22</title>
+		<style>
+			select {
+				display: none;
+			}
+			
+			.palette {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			.palette li {
+				width: 40px;
+				height: 40px;
+				border: 1px solid #000;
+				cursor: pointer;
+			}
+			
+			#smile-img {
+				width: 480px;
+				height: 480px;
+				background: url("http://ife.baidu.com/2016/static/img/erik_ce204002.jpg");
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="block1">
+			<h2>任务1</h2>
+			<input id="name" type="text">
+			<button id="submit-btn">Submit</button>
+		</div>
+
+		<div>
+			<h2>任务二</h2>
+			<label>
+    	<input id="school" name="status" type="radio">
+   	 	School
+    </label>
+			<label>
+        <input id="company" name="status" type="radio">
+        Company
+    </label>
+
+			<br /><br />
+
+			<select id="school-select">
+				<option>北京邮电大学</option>
+				<option>黑龙江大学</option>
+				<option>华中科技大学</option>
+			</select>
+
+			<select id="company-select">
+				<option>百度</option>
+				<option>爱奇艺</option>
+			</select>
+		</div>
+
+		<br /><br /><br />
+
+		<div>
+			<h2>任务3</h2>
+			<ul class="palette">
+				<li style="background-color:crimson"></li>
+				<li style="background-color:bisque"></li>
+				<li style="background-color:blueviolet"></li>
+				<li style="background-color:coral"></li>
+				<li style="background-color:chartreuse"></li>
+				<li style="background-color:darkolivegreen"></li>
+				<li style="background-color:cyan"></li>
+				<li style="background-color:#194738"></li>
+			</ul>
+
+			<p class="color-picker"></p>
+
+		</div>
+		<br />
+		<div>
+			<h2>任务4</h2>
+			<div id="fade-obj" style="width:300px;height:300px;background:#000"></div>
+			<button id="fade-btn">淡出</button>
+		</div>
+		<div>
+			<h2>任务5</h2>
+			<div id="smile-img"></div>
+		</div>
+		<script>
+			document.getElementById("submit-btn").onclick = function() {
+				logInput()
+			};
+
+			function logInput() {
+				console.log(document.getElementById("name").value);
+			}
+
+			document.getElementById("name").onkeydown = function() {
+				if(event.keyCode == 13) {
+					console.log(document.getElementById("name").value);
+				} else if(event.keyCode == 27) {
+					document.getElementById("name").value = "";
+				}
+			}
+
+			var school = document.getElementById("school");
+			var company = document.getElementById("company");
+			var schoolSelect = document.getElementById("school-select");
+			var companySelect = document.getElementById("company-select");
+
+			school.onclick = function() {
+				if(this.checked) {
+					schoolSelect.style.display = "block";
+					companySelect.style.display = "none";
+				} else {
+					schoolSelect.style.display = "none";
+				}
+
+				company.onclick = function() {
+					if(this.checked) {
+						companySelect.style.display = "block";
+						schoolSelect.style.display = "none";
+					} else {
+						companySelect.style.display = "none";
+					}
+				}
+			}
+
+			var tiaosepan = document.getElementsByClassName('palette');
+			tiaosepan[0].onclick = function(e) {
+				var e = e || window.event;
+				var target = e.target || e.srcElement;
+				if(target.nodeName.toLocaleLowerCase() == "li") {
+					var t = e.target;
+					var c = t.style.backgroundColor;
+					var p = document.getElementsByClassName("color-picker")[0];
+					p.innerHTML = c;
+					p.style.color = c;
+				}
+			}
+
+			var fadeBtn = document.getElementById('fade-btn');
+			var fade = document.getElementById('fade-obj');
+			var timer = null;
+
+			fadeBtn.onclick = function() {
+				fadeBtn.disabled = true;
+				clearInterval(timer);
+				if(fadeBtn.innerHTML == '淡出') {
+					fade.style.transition = 'opacity 2s';
+					fade.style.opacity = '0';
+					timer = setInterval(function() {
+						fadeBtn.innerHTML = '淡入';
+						fadeBtn.disabled = false;
+					}, 2000);
+
+				} else {
+
+					fade.style.transition = 'opacity 2s';
+					fade.style.opacity = '1';
+					timer = setInterval(function() {
+						fadeBtn.innerHTML = '淡出';
+						fadeBtn.disabled = false;
+					}, 2000);
+
+				}
+			}
+
+			var smile = document.getElementById('smile-img');
+			var posY = 480;
+
+			var content = setInterval(function() {
+				posY += 480;
+				if(posY > 7680) {
+					posY = 480;
+				}
+				smile.style.backgroundPositionY = '-' + posY + 'px';
+			}, 100);
+		</script>
+
+	</body>
+
+</html>
