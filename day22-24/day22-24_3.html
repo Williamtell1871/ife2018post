@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>day22-24第三題</title>
+	</head>
+
+	<body>
+		<script>
+			function diyTrim(str) {
+				var result = "";
+				var countLeft = 0;
+				var countRight = str.length;
+				if (str != " " && str != "　") {
+					for(var i = 0; i < str.length; i++) {
+						if(str.charAt(i) == " " || str.charAt(i) == "　") {
+							countLeft = countLeft + 1;
+						} else {
+							break;
+						}
+					}
+					for(var i = str.length - 1; i >= 0; i--) {
+						if(str.charAt(i) == " " || str.charAt(i) == "　") {
+							countRight = countRight - 1;
+						} else {
+							break;
+						}
+					}
+					result = str.substring(countLeft, countRight);
+				} else {
+					result = "";
+				}
+				return result;
+			}
+
+			// 测试用例
+			console.log(diyTrim(' a f b    ')); // ->a f b
+			console.log(diyTrim('    ffdaf    ')); // ->ffdaf
+			console.log(diyTrim('1    ')); // ->1
+			console.log(diyTrim('　　f')); // ->f
+			console.log(diyTrim('  　  a f b 　　 ')); // ->a f b
+			console.log(diyTrim(' ')); // ->
+			console.log(diyTrim('　')); // ->
+			console.log(diyTrim('')); // ->
+
+			/*
+			去掉字符串str中，连续重复的地方
+			*/
+			function removeRepetition(str) {
+				var result = "";
+				var strArray = str.split("");
+				var index = [];
+				for (var i=1;i<str.length;i++){
+					for (var j=i;j>0;j--){
+						if (str.charAt(j)==str.charAt(j-1)){
+							index.push(j-1);
+							break;
+						} else {
+							break;
+						}
+					}
+				}
+				if (index.length !== 0){
+					strArray.splice(index[0],1); 
+					//假如index数组里没有任何元素，该语句也会将strArray数组中的第一个元素删去。
+					
+					
+					
+					for(var i=1;i<index.length;i++){
+						strArray.splice(index[i]-i,1);
+					}
+				}
+				result = strArray.join("");
+
+				return result;
+			}
+
+			// 测试用例
+			console.log(removeRepetition("abc")); // ->abc
+			console.log(removeRepetition("aabbaabb")); // ->abab
+			console.log(removeRepetition("aaa")); // ->a
+			console.log(removeRepetition("abbba")); // ->aba
+			
+			console.log(removeRepetition("")); // ->
+			
+		</script>
+	</body>
+
+</html>
