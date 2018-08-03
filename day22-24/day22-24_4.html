@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>day22-24第四题</title>
+	</head>
+
+	<body>
+		<div id="tree">
+			<button>根据输入name找到对应id</button>
+			<button>根据输入id找到对应name</button>
+			<button>以前序遍历方式将所有的name输入到console中</button>
+			<button>以中序遍历方式将所有的name输入到console中</button>
+			<button>以后序遍历方式将所有的name输入到console中</button>
+		</div>
+		<script>
+			var tree = {
+				"id": 0,
+				"name": "root",
+				"left": {
+					"id": 1,
+					"name": "Simon",
+					"left": {
+						"id": 3,
+						"name": "Carl",
+						"left": {
+							"id": 7,
+							"name": "Lee",
+							"left": {
+								"id": 11,
+								"name": "Fate"
+							}
+						},
+						"right": {
+							"id": 8,
+							"name": "Annie",
+							"left": {
+								"id": 12,
+								"name": "Saber"
+							}
+						}
+					},
+					"right": {
+						"id": 4,
+						"name": "Tony",
+						"left": {
+							"id": 9,
+							"name": "Candy"
+						}
+					}
+				},
+				"right": {
+					"id": 2,
+					"name": "right",
+					"left": {
+						"id": 5,
+						"name": "Carl",
+					},
+					"right": {
+						"id": 6,
+						"name": "Carl",
+						"right": {
+							"id": 10,
+							"name": "Kai"
+						}
+					}
+				}
+			}
+			
+			var tree_task = document.getElementById("tree");
+			var btn = document.querySelectorAll("button");
+			btn[0].addEventListener('click',function(){
+				findIdByName('Simon');
+				findIdByName('Carl');
+				findIdByName('Tony');
+				findIdByName('Lee');
+				findIdByName('Annie');
+				findIdByName('Candy');
+				findIdByName('Kai');
+				findIdByName('Saber');
+			});
+			
+			btn[1].addEventListener('click',function(){
+				findNameById(1);
+				findNameById(2);
+				findNameById(3);
+				findNameById(4);
+				findNameById(5);
+				findNameById(6);
+				findNameById(7);
+				findNameById(8);
+				findNameById(9);
+				findNameById(10);
+				findNameById(11);
+				findNameById(12);
+			});
+			
+			btn[2].addEventListener("click",getListWithDLR);
+			btn[3].addEventListener("click",getListWithLDR);
+			btn[4].addEventListener("click",getListWithLRD);
+			
+			// 假设id和name均不会重复，根据输入name找到对应的id
+			function findIdByName(name) {
+				var id;
+				var recursion = function(obj){
+					if (id || !obj) return;
+					if (obj.name === name) return id = obj.id;
+					recursion(obj.left);
+					recursion(obj.right);
+				}
+				recursion(tree);
+				console.log("name=",name," , id=",id);
+			}
+
+			// 假设id和name均不会重复，根据输入id找到对应的name
+			function findNameById(id) {
+				var name;
+				var recursion = function(obj){
+					if (name || !obj) return;
+					if (obj.id == id) return name = obj.name;
+					recursion(obj.left);
+					recursion(obj.right);
+				}
+				recursion(tree);
+				console.log("id=",id," , name=",name);
+			}
+
+			// 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
+			function getListWithDLR() {
+				var recursion = function(obj){
+					if (obj == undefined) return;
+					if (obj!==null){
+						console.log(obj.name);
+						recursion(obj.left);
+						recursion(obj.right);
+					} 
+				}
+				recursion(tree);
+			}
+
+			// 把这个对象中所有的名字以“中序遍历”的方式全部输出到console中
+			function getListWithLDR() {
+				var recursion = function(obj){
+					if (obj == undefined) return;
+					if (obj !== null){
+						recursion(obj.left);
+						console.log(obj.name);
+						recursion(obj.right);
+					}
+				}
+				recursion(tree);
+			}
+
+			// 把这个对象中所有的名字以“后序遍历”的方式全部输出到console中
+			function getListWithLRD() {
+				var recursion = function(obj){
+					if (obj == undefined) return;
+					if (obj !== null){
+						recursion(obj.left);
+						recursion(obj.right);
+						console.log(obj.name);
+					}
+				}
+				recursion(tree);
+			}
+		</script>
+	</body>
+
+</html>
