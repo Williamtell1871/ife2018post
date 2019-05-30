@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>IFE ECMAScript</title>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<div id="news-top" class="section">
+				<h3>Some title</h3>
+				<div class="content">
+					<ul>
+						<li><span>HTML</span>
+							<a href="">Some Link1</a>
+						</li>
+						<li><span>JS</span>
+							<a class="active" href="">Some Link2</a>
+						</li>
+						<li><span>CSS</span>
+							<a href="">Some Link3</a>
+						</li>
+						<li><span>JS</span>
+							<a href="">Some Link4</a>
+						</li>
+					</ul>
+				</div>
+				<img src="">
+				<p class="">Some Text</p>
+			</div>
+			<div id="news-normal" class="section">
+				<h3>Some title</h3>
+				<div class="content">
+					<ul>
+						<li><span>HTML</span>
+							<a href="">Some Link1</a>
+						</li>
+						<li><span>HTML</span>
+							<a href="">Some Link2</a>
+						</li>
+						<li><span>JS</span>
+							<a class="active" href="#">Some Link3</a>
+						</li>
+						<li><span>CSS</span>
+							<a href="">Some Link4</a>
+						</li>
+					</ul>
+				</div>
+				<img src="">
+				<p class="">Some Text</p>
+			</div>
+			<div>
+             	<p><b>使用getElementById、getElementsByTagName、childNodes、parentNode</b></p>
+				<hr />
+				<button type="button" onclick="getAllListItem()">点击获得页面中所有li标签</button>
+				<hr /><br />
+				<button type="button" onclick="findAllHtmlSpanInOneSection('news-top')">点击获得section1所有span中内容为HTML的span标签</button>
+				
+				<button type="button" onclick="findAllHtmlSpanInOneSection('news-normal')">点击获得section2所有span中内容为HTML的span标签</button>
+				<hr /><br />
+				<button type="button" onclick="findListItem('news-top', 'HTML')">点击获得section1中span内容为HTML的li标签</button>
+			
+				<button type="button" onclick="findListItem('news-top', 'CSS')">点击获得section1中span内容为CSS的li标签</button>
+				
+				<button type="button" onclick="findListItem('news-top', 'JS')">点击获得section1中span内容为JS的li标签</button>
+				<br /><br />
+				<button type="button" onclick="findListItem('news-normal', 'HTML')">点击获得section2中span内容为HTML的li标签</button>
+				
+				<button type="button" onclick="findListItem('news-normal', 'CSS')">点击获得section2中span内容为CSS的li标签</button>
+				
+				<button type="button" onclick="findListItem('news-normal', 'JS')">点击获得section2中span内容为JS的li标签</button>
+				<hr /><br />
+				<button type="button" onclick="getActiveLinkContent('news-top')">点击获得section1中active链接中的文字内容</button>
+				
+				<button type="button" onclick="getActiveLinkContent('news-normal')">点击获得section2中active链接中的文字内容</button>
+				<hr />
+				<p id="result"></p>
+			</div>
+			<div>
+				<p><b>使用querySelector、querySelectorAll</b></p>
+				<hr />
+				<button type="button" onclick="getAllListItem1()">点击获得页面中所有li标签</button>
+				<hr /><br />
+				<button type="button" onclick="findAllHtmlSpanInOneSection1()">点击获得section1所有span中内容为HTML的span标签</button>
+				
+				<button type="button" onclick="findAllHtmlSpanInOneSection1('#news-normal')">点击获得section2所有span中内容为HTML的span标签</button>
+				<hr /><br />
+				<button type="button" onclick="findListItem1('#news-top', 'HTML')">点击获得section1中span内容为HTML的li标签</button>
+			
+				<button type="button" onclick="findListItem1('#news-top', 'CSS')">点击获得section1中span内容为CSS的li标签</button>
+				
+				<button type="button" onclick="findListItem1('#news-top', 'JS')">点击获得section1中span内容为JS的li标签</button>
+				<br /><br />
+				<button type="button" onclick="findListItem1('#news-normal', 'HTML')">点击获得section2中span内容为HTML的li标签</button>
+				
+				<button type="button" onclick="findListItem1('#news-normal', 'CSS')">点击获得section2中span内容为CSS的li标签</button>
+				
+				<button type="button" onclick="findListItem1('#news-normal', 'JS')">点击获得section2中span内容为JS的li标签</button>
+				<hr /><br />
+				<button type="button" onclick="getActiveLinkContent1('#news-top')">点击获得section1中active链接中的文字内容</button>
+				
+				<button type="button" onclick="getActiveLinkContent1('#news-normal')">点击获得section2中active链接中的文字内容</button>
+				<hr />
+				<p id="result1"></p>
+			</div>	
+		</div>
+		<script>
+			function getAllListItem() {
+				// 返回页面中所有li标签
+				var x = document.getElementsByTagName("li");
+				var y = document.getElementById("result");
+				y.innerHTML = "";
+				for(var i = 0; i < x.length; i++) {
+					y.innerHTML = y.innerHTML + "<br />" + x[i].innerHTML;
+				}
+			}
+
+			function findAllHtmlSpanInOneSection(sectionId) {
+				// 返回某个section下所有span中内容为HTML的span标签
+				var x = document.getElementById(sectionId).getElementsByTagName("span");
+				var y = document.getElementById("result");
+				y.innerHTML = "";
+				for(var i = 0; i < x.length; i++) {
+					if(x[i].innerHTML == "HTML") {
+						y.innerHTML = y.innerHTML + "<br />" + x[i].innerHTML;
+					}
+				}
+			}
+
+			function findListItem(sectionId, spanCont) {
+				// 返回某个section下，所有所包含span内容为spanCont的LI标签
+				var x = document.getElementById(sectionId).getElementsByTagName("span");
+				var y = document.getElementById("result");
+				y.innerHTML = "";
+				for(var i=0;i<x.length;i++){
+					if(x[i].innerHTML == spanCont){
+						y.innerHTML = y.innerHTML + "<br />" + x[i].parentNode.innerHTML;
+					}
+				}
+			}
+
+			function getActiveLinkContent(sectionId) {
+				// 返回某个section下，class为active的链接中包含的文字内容
+				var x = document.getElementById(sectionId).getElementsByClassName("active");
+				var y = document.getElementById("result");
+				y.innerHTML = "";
+				for (var i = 0 ; i < x.length ; i++ ){
+					y.innerHTML = y.innerHTML + "<br />" + x[i].innerHTML;
+				}
+			}
+			
+			function getAllListItem1() {
+				// 返回页面中所有li标签
+				 var x = document.body.querySelectorAll("li");
+				 let y = document.querySelector("#result1");
+				 y.innerHTML = "";
+				 for(var i=0;i<x.length;i++){
+				 	y.innerHTML = y.innerHTML + "<br />" + x[i].innerHTML;
+				 }
+			}
+
+			function findAllHtmlSpanInOneSection1() {
+				// 返回某个section下所有span中内容为HTML的span标签
+				var x = document.querySelector("div#news-top span");
+				
+				let y = document.querySelector("#result1");
+				y.innerHTML = "";
+				for (var k=0;k<x.length;k++){
+					if(x[k].innerHTML=="HTML"){
+						y.innerHTML = y.innerHTML + "<br />" + x[k].innerHTML;
+					}
+				}
+			}
+
+			function findListItem1(sectionId, spanCont) {
+				// 返回某个section下，所有所包含span内容为spanCont的LI标签
+				
+			}
+
+			function getActiveLinkContent1(sectionId) {
+				// 返回某个section下，class为active的链接中包含的文字内容
+				
+			}
+		</script>
+	</body>
+
+</html>
